@@ -1,0 +1,28 @@
+/* Login Page */
+.signIn-container {
+  max-width: 600px;
+  margin: auto auto;
+  margin-top: 110px;
+}
+.card {
+  padding: 35px 25px;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.loginPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ede5e5;
+}
+.loginBtn {
+  border-radius: 0 !important;
+}
+
+/* Nav Bar */
+.navDiv {
+  padding: 10px 69px;
+}
+.navbar {
+  background: white !important;
+  border-bottom: 3px solid #80808054;
+}
