@@ -3,7 +3,7 @@ import { ThreeCircles } from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div className="grid place-items-center  h-screen w-full bg-slate-200/25">
+    <div className="grid place-items-center  h-screen w-full bg-slate-200/25 loader">
       <ThreeCircles
         height="60"
         width="60"

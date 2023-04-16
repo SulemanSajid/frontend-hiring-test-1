@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
-import Table from "./Table";
 import { refreshCall, siginCall } from "../utils/utils";
+import Loader from "./Loader";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
@@ -10,8 +10,14 @@ function SignIn() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [loader, setLoader] = useState(false);
   const [time, setTime] = useState(4);
   const [auth, setauth] = useState(false);
+  //   useEffect(() => {
+  //     if (auth) {
+  //       navigate("/");
+  //     }
+  //   }, []);
   useEffect(() => {
     const delay = time * 60000;
     if (localStorage.getItem("access_token")) {
@@ -27,21 +33,30 @@ function SignIn() {
     return () => clearInterval(intervalId);
   }, [time]);
 
-  const login = (e) => {
+  const login = async (e) => {
     e.stopPropagation();
-    if (userName == "login" && password == "123") {
-      localStorage.setItem("login", "true");
-      navigate(`/`);
-      console.log("user login");
+    setLoader(true);
+    try {
+      //   debugger;
+      const res = await siginCall(userName, password);
+      setTime(7);
+      localStorage.setItem("access_token", res.data.access_token);
+      localStorage.setItem("refresh_token", res.data.refresh_token);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
     }
     setUserName("");
     setPassword("");
+    setLoader(false);
   };
   return (
     <>
       <div className="loginPage">
         <Navbar />
-        {!auth ? (
+        {loader ? (
+          <Loader />
+        ) : (
           <div className="signIn-container">
             <div className="card card-custom">
               <Form>
@@ -49,7 +64,7 @@ function SignIn() {
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Email"
+                    placeholder="User Name"
                     required
                     value={userName}
                     onChange={(e) => {
@@ -76,8 +91,6 @@ function SignIn() {
               </Form>
             </div>
           </div>
-        ) : (
-          <Table></Table>
         )}
       </div>
     </>

@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
-import BootstrapTable from "react-table";
+import React, { useMemo, useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
 import { archiveCall, getData, getPaginationData } from "../utils/utils";
-import DetailModal from "./Modal";
-// import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
-function Table() {
-  const [callsData, setCallsData] = useState([]);
-  const [callsDataFiltered, setCallsDataFiltered] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [hasNext, setHasNext] = useState(true);
-  const [modalStatus, setModalStatus] = useState(false);
-  const [curRow, setCurRow] = useState({});
+const TableComponent = () => {
   const [reloadRes, setReloadRes] = useState(false);
   const [filter, setFilter] = useState("all");
   const [archiveData, setarchiveData] = useState({});
+  const [callsDataFiltered, setCallsDataFiltered] = useState([]);
+  const [callsData, setCallsData] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   const setFIlterData = (filterValue) => {
     if (filterValue === "all") {
@@ -31,6 +26,7 @@ function Table() {
 
   useEffect(() => {
     const retreiveData = async () => {
+      // debugger;
       var res = await getData();
       await setCallsData(res.data.nodes);
       setCallsDataFiltered(res.data.nodes);
@@ -38,166 +34,40 @@ function Table() {
     };
     retreiveData();
   }, [reloadRes, archiveData]);
-  const columns = [
-    {
-      dataField: "call_type",
-      text: "CALL TYPE",
-      formatter: (cell, row) => {
-        return (
-          <span
-            className={
-              row.call_type === "voicemail"
-                ? "voicemail"
-                : row.call_type === "answered"
-                ? "answered"
-                : "missed"
-            }
-          >
-            {row.call_type}
-          </span>
-        );
-      },
-    },
-    {
-      dataField: "direction",
-      text: "DIRECTION",
-      formatter: (cell, row) => {
-        return <span className="voicemail">{row.direction}</span>;
-      },
-    },
-    {
-      dataField: "duration",
-      text: "DURATION",
-    },
-    {
-      dataField: "from",
-      text: "FROM",
-    },
-    {
-      dataField: "to",
-      text: "TO",
-    },
-    {
-      dataField: "via",
-      text: "VIA",
-    },
-    {
-      dataField: "created_at",
-      text: "CREATED AT",
-      sort: true,
-    },
-    {
-      dataField: "is_archived",
-      text: "STATUS",
-      formatter: (cell, row) => {
-        return (
-          <span
-            className={`status ${row.is_archived ? "Archived" : "Unarchive"}`}
-          >
-            {row.is_archived ? "Archived" : "Unarchive"}
-          </span>
-        );
-      },
-    },
-    {
-      dataField: "",
-      text: "ACTIONS",
-      formatter: (cell, row) => {
-        return (
-          <>
-            <button
-              className="btn btn-note mb-2"
-              onClick={() => {
-                setModalStatus(true);
-                setCurRow(row);
-              }}
-            >
-              Add Note
-            </button>
-            <button
-              className="btn btn-note"
-              onClick={async () => {
-                const res = await archiveCall(row.id);
-                setarchiveData(res.data);
-              }}
-            >
-              Archive
-            </button>
-          </>
-        );
-      },
-    },
-  ];
-  const paginationCall = async (offset) => {
-    const res = await getPaginationData(offset);
-    setCallsData(res.data.nodes);
-    setFilter("all");
-    setCallsDataFiltered(res.data.nodes);
-    setOffset(offset);
-    setHasNext(res.data.hasNextPage);
-  };
+
   return (
     <>
-      <div className="heading">
-        <h3 className="mb-4 mt-4">Turing Technoloogies Frontend Test</h3>
-        <div>
-          <label htmlFor="filter">Filter by: </label>
-
-          <select
-            id="filter"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              setFIlterData(e.target.value);
-            }}
-          >
-            <option value="all" selected>
-              All
-            </option>
-            <option value="archived">Archived</option>
-            <option value="unarchived">Unarchived</option>
-          </select>
-        </div>
-      </div>
-      <BootstrapTable
-        keyField="id"
-        data={callsDataFiltered}
-        columns={columns}
-      />
-      <div className="pagination">
-        <button
-          className="btn btn-note me-2"
-          disabled={offset === 0 ? true : false}
-          onClick={() => {
-            paginationCall(offset - 10);
-          }}
-        >
-          Prev
-        </button>
-        <button
-          className="btn btn-note"
-          disabled={!hasNext}
-          onClick={() => {
-            paginationCall(offset + 10);
-          }}
-        >
-          Next
-        </button>
-      </div>
-      {modalStatus ? (
-        <>
-          <div className="backdrop"></div>
-          <DetailModal
-            rowData={curRow}
-            setReloadRes={setReloadRes}
-            closeModal={() => {
-              setModalStatus(false);
-            }}
-          />
-        </>
-      ) : null}
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colSpan={2}>Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </Table>
     </>
   );
-}
+};
 
-export default Table;
+export default TableComponent;

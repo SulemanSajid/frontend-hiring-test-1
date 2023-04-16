@@ -21,8 +21,20 @@
 /* Nav Bar */
 .navDiv {
   padding: 10px 69px;
+  width: 100%;
 }
 .navbar {
   background: white !important;
   border-bottom: 3px solid #80808054;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+}
+.logoutBtn {
+  border-radius: 0 !important;
+  float: right;
 }

@@ -27,7 +27,7 @@ function App() {
             }
           ></Route>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Pages.Home />} />
+          <Route path="/" element={<Pages.Main />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
