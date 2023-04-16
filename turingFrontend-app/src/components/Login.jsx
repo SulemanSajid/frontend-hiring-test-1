@@ -54,44 +54,53 @@ function SignIn() {
     <>
       <div className="loginPage">
         <Navbar />
-        {loader ? (
-          <Loader />
-        ) : (
-          <div className="signIn-container">
-            <div className="card card-custom">
-              <Form>
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label>User Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="User Name"
-                    required
-                    value={userName}
-                    onChange={(e) => {
-                      setUserName(e.target.value);
-                    }}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    required
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                </Form.Group>
-                <Button variant="primary" className="loginBtn" onClick={login}>
-                  Log in
-                </Button>
-              </Form>
-            </div>
+        {loader && (
+          <div
+            style={{
+              position: "absolute",
+              marginLeft: "47%",
+              marginTop: "120px",
+              zIndex: "222",
+            }}
+          >
+            <Loader />
           </div>
         )}
+
+        <div className="signIn-container">
+          <div className="card card-custom">
+            <Form>
+              <Form.Group className="mb-4" controlId="formBasicEmail">
+                <Form.Label>User Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="User Name"
+                  required
+                  value={userName}
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                  }}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-4" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  required
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Button variant="primary" className="loginBtn" onClick={login}>
+                Log in
+              </Button>
+            </Form>
+          </div>
+        </div>
       </div>
     </>
   );

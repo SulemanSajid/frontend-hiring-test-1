@@ -25,7 +25,7 @@
 }
 .navbar {
   background: white !important;
-  border-bottom: 3px solid #80808054;
+  border-bottom: 2px solid #80808054;
 }
 
 .loader {
@@ -37,4 +37,25 @@
 .logoutBtn {
   border-radius: 0 !important;
   float: right;
+}
+.archived {
+  background: #00b99929 !important;
+  color: #265b99 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.unarchived {
+  background: #72777638 !important;
+  color: #1c1f24 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.dropdown-item {
+  padding: 3px 10px !important;
+  margin: 0 8px !important;
+  width: 90% !important;
+}
+.dropdown-item:hover {
+  color: #1647f1 !important;
+  background-color: #cec3f999 !important;
 }
